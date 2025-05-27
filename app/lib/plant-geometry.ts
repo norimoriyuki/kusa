@@ -173,9 +173,9 @@ export class PlantGeometry {
     const randomAngleX = (Math.random() - 0.5) * 60;  // X軸回転 -30度から+30度
     const randomAngleZ = (Math.random() - 0.5) * 40;  // Z軸回転 -20度から+20度
     
-    let leafDirection = state.direction.clone();
-    let leafRight = state.right.clone();
-    let leafUp = state.up.clone();
+    const leafDirection = state.direction.clone();
+    const leafRight = state.right.clone();
+    const leafUp = state.up.clone();
     
     // 3つの軸でランダム回転を適用
     const rotY = new THREE.Matrix4().makeRotationAxis(leafDirection, randomAngleY * Math.PI / 180);
