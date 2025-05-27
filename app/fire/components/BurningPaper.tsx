@@ -120,4 +120,6 @@ export const BurningPaper = forwardRef<BurningPaperRef, BurningPaperProps>(({
       />
     </mesh>
   );
-}); 
+});
+
+BurningPaper.displayName = 'BurningPaper'; 
