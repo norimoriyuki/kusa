@@ -19,7 +19,7 @@ export function FireScene({
     <div className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
-        style={{ background: 'linear-gradient(to bottom, #1a1a1a, #000000)' }}
+        style={{ background: 'linear-gradient(to bottom, #f8f9fa, #ffffff)' }}
       >
         {/* 照明設定 */}
         <ambientLight intensity={0.2} />

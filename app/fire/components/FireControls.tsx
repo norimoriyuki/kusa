@@ -30,7 +30,7 @@ export function FireControls({
           <input
             type="range"
             min="0.001"
-            max="0.05"
+            max="1"
             step="0.001"
             value={burnSpeed}
             onChange={(e) => onBurnSpeedChange(parseFloat(e.target.value))}
@@ -49,6 +49,17 @@ export function FireControls({
             <p>• リアルタイムノイズ生成</p>
             <p>• 動的な燃焼境界</p>
             <p>• 炎の揺らぎエフェクト</p>
+          </div>
+        </div>
+
+        <div className="mt-6 p-4 bg-gray-900/50 rounded-lg border border-orange-500/20">
+          <h3 className="text-sm font-medium text-orange-300 mb-2">リアル燃焼エフェクト:</h3>
+          <div className="text-xs text-orange-200 space-y-1">
+            <p>• 高品質Simplexノイズによる自然な燃え広がり</p>
+            <p>• 段階的色変化: 紙→炎→焦げ→灰→穴</p>
+            <p>• フラクタルノイズで複雑な燃焼境界</p>
+            <p>• ランダムな燃焼速度と風の影響</p>
+            <p>• discardによる穴あき効果</p>
           </div>
         </div>
 
