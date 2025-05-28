@@ -31,7 +31,7 @@ export const Deck: React.FC = () => {
           position={[0, 0.8 + index * 0.02, -3.5 - index * 0.01]} // 机の上、奥側に配置
           rotation={[-Math.PI / 2, 0, (Math.random() - 0.5) * 0.1]} // 水平に配置
           onClick={index === 0 ? drawCard : undefined}
-          onPointerOver={(_) => {
+          onPointerOver={() => {
             if (index === 0) {
               document.body.style.cursor = 'pointer';
             }
