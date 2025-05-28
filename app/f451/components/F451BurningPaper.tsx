@@ -24,6 +24,9 @@ uniform float burnValue;
 uniform float time;
 uniform vec3 burnColor;
 uniform vec3 emberColor;
+uniform vec3 ignitionPoint1;
+uniform vec3 ignitionPoint2;
+uniform vec3 ignitionPoint3;
 
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -68,24 +71,35 @@ float fbm(vec2 st) {
   return value;
 }
 
-// 中央から燃え広がるパターン
+// 複数の発火点から燃え広がるパターン
 float getBurnPattern(vec2 uv, float burnVal, float t) {
-  // 中央からの距離
-  vec2 center = vec2(0.5, 0.5);
-  float distFromCenter = distance(uv, center);
+  // 3つの発火点からの距離を計算
+  float dist1 = distance(uv, ignitionPoint1.xy);
+  float dist2 = distance(uv, ignitionPoint2.xy);
+  float dist3 = distance(uv, ignitionPoint3.xy);
+  
+  // 各発火点の強度（時間差で発火）
+  float intensity1 = ignitionPoint1.z;
+  float intensity2 = ignitionPoint2.z;
+  float intensity3 = ignitionPoint3.z;
   
   // 複数スケールのノイズ
   float largeNoise = fbm(uv * 2.0 + t * 0.03);
   float mediumNoise = fbm(uv * 6.0 + t * 0.08);
   float smallNoise = fbm(uv * 15.0 + t * 0.15);
   
-  // 燃焼の進行（中央から外側へ）
-  float burnProgress = burnVal - distFromCenter * 1.2;
+  // 各発火点からの燃焼進行を計算
+  float burnProgress1 = (burnVal * intensity1) - dist1 * 1.5;
+  float burnProgress2 = (burnVal * intensity2) - dist2 * 1.5;
+  float burnProgress3 = (burnVal * intensity3) - dist3 * 1.5;
+  
+  // 最も進んでいる燃焼を採用（複数の火が合流する効果）
+  float maxBurnProgress = max(max(burnProgress1, burnProgress2), burnProgress3);
   
   // ノイズを重ね合わせて自然な燃焼境界
   float combinedNoise = largeNoise * 0.4 + mediumNoise * 0.3 + smallNoise * 0.2;
   
-  return burnProgress + combinedNoise * 0.25;
+  return maxBurnProgress + combinedNoise * 0.25;
 }
 
 void main() {
@@ -188,6 +202,21 @@ export const F451BurningPaper = forwardRef<F451BurningPaperRef, F451BurningPaper
   const timeRef = useRef(0);
 
   const shaderMaterial = useMemo(() => {
+    // ランダムな発火点を3つ生成
+    const generateRandomIgnitionPoints = () => {
+      const points = [];
+      for (let i = 0; i < 3; i++) {
+        points.push(new THREE.Vector3(
+          Math.random() * 0.8 + 0.1, // x: 0.1-0.9の範囲
+          Math.random() * 0.8 + 0.1, // y: 0.1-0.9の範囲
+          0.7 + Math.random() * 0.6   // z: 0.7-1.3の範囲（発火強度/タイミング）
+        ));
+      }
+      return points;
+    };
+
+    const ignitionPoints = generateRandomIgnitionPoints();
+
     return new THREE.ShaderMaterial({
       vertexShader: f451VertexShader,
       fragmentShader: f451FragmentShader,
@@ -195,7 +224,10 @@ export const F451BurningPaper = forwardRef<F451BurningPaperRef, F451BurningPaper
         burnValue: { value: burnValueRef.current },
         time: { value: 0 },
         burnColor: { value: new THREE.Color(1.0, 0.5, 0.0) },
-        emberColor: { value: new THREE.Color(0.9, 0.1, 0.0) }
+        emberColor: { value: new THREE.Color(0.9, 0.1, 0.0) },
+        ignitionPoint1: { value: ignitionPoints[0] },
+        ignitionPoint2: { value: ignitionPoints[1] },
+        ignitionPoint3: { value: ignitionPoints[2] }
       },
       transparent: true,
       side: THREE.DoubleSide,
@@ -208,8 +240,21 @@ export const F451BurningPaper = forwardRef<F451BurningPaperRef, F451BurningPaper
     timeRef.current = 0;
     
     if (materialRef.current) {
+      // 新しいランダムな発火点を生成
+      const newIgnitionPoints = [];
+      for (let i = 0; i < 3; i++) {
+        newIgnitionPoints.push(new THREE.Vector3(
+          Math.random() * 0.8 + 0.1, // x: 0.1-0.9の範囲
+          Math.random() * 0.8 + 0.1, // y: 0.1-0.9の範囲
+          0.7 + Math.random() * 0.6   // z: 0.7-1.3の範囲（発火強度/タイミング）
+        ));
+      }
+
       materialRef.current.uniforms.burnValue.value = burnValueRef.current;
       materialRef.current.uniforms.time.value = timeRef.current;
+      materialRef.current.uniforms.ignitionPoint1.value = newIgnitionPoints[0];
+      materialRef.current.uniforms.ignitionPoint2.value = newIgnitionPoints[1];
+      materialRef.current.uniforms.ignitionPoint3.value = newIgnitionPoints[2];
     }
   };
 
