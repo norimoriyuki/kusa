@@ -1,8 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
 import { F451Scene } from './components/F451Scene';
 
 export default function F451Page() {
+  useEffect(() => {
+    document.title = "F451";
+  }, []);
+
   const handleBurnComplete = () => {
     console.log('紙が完全に燃え尽きました');
   };
