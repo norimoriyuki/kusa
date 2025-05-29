@@ -149,13 +149,13 @@ const calculateHandPosition = (index: number, isSelected: boolean = false) => {
   return {
     position: {
       x: Math.sin(angle) * radius, // 左右の配置
-      y: 2 - Math.abs(normalizedIndex) * 0.2, // 中央が少し高く
-      z: radius + normalizedIndex * 0.01 + (isSelected ? selectedOffset : 0) // 選択されたカードは前に出す
+      y: 2,//- Math.abs(normalizedIndex) * 0.1, // 中央が少し高く
+      z: radius + normalizedIndex * 0.2 + (isSelected ? selectedOffset : 0) // 選択されたカードは前に出す
     },
     rotation: {
       x: -0.4,
       y: 0,
-      z: -normalizedIndex*0.1  // 上下逆にする
+      z: -normalizedIndex*0.1
     }
   };
 }; 
