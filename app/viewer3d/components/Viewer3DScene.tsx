@@ -27,7 +27,7 @@ const Viewer3DContent: React.FC = () => {
               name="smooth"
               value="basic"
               checked={smoothMode === 'basic'}
-              onChange={(e) => setSmoothMode(e.target.value as any)}
+              onChange={(e) => setSmoothMode(e.target.value as 'basic' | 'advanced' | 'ultra' | 'texture')}
               className="text-blue-500"
             />
             <span>基本（フラットシェーディング）</span>
@@ -38,7 +38,7 @@ const Viewer3DContent: React.FC = () => {
               name="smooth"
               value="advanced"
               checked={smoothMode === 'advanced'}
-              onChange={(e) => setSmoothMode(e.target.value as any)}
+              onChange={(e) => setSmoothMode(e.target.value as 'basic' | 'advanced' | 'ultra' | 'texture')}
               className="text-blue-500"
             />
             <span>スムース（法線最適化）</span>
@@ -49,7 +49,7 @@ const Viewer3DContent: React.FC = () => {
               name="smooth"
               value="ultra"
               checked={smoothMode === 'ultra'}
-              onChange={(e) => setSmoothMode(e.target.value as any)}
+              onChange={(e) => setSmoothMode(e.target.value as 'basic' | 'advanced' | 'ultra' | 'texture')}
               className="text-blue-500"
             />
             <span>ウルトラスムース（頂点平滑化）</span>
@@ -60,7 +60,7 @@ const Viewer3DContent: React.FC = () => {
               name="smooth"
               value="texture"
               checked={smoothMode === 'texture'}
-              onChange={(e) => setSmoothMode(e.target.value as any)}
+              onChange={(e) => setSmoothMode(e.target.value as 'basic' | 'advanced' | 'ultra' | 'texture')}
               className="text-blue-500"
             />
             <span>🖼️ テクスチャテスト（PNG確認）</span>
