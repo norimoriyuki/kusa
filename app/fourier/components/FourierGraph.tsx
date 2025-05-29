@@ -6,13 +6,11 @@ import { GraphPoint } from '../types/fourier';
 interface FourierGraphProps {
   realSpaceData: GraphPoint[];
   fourierSpaceData: GraphPoint[];
-  title?: string;
 }
 
 export const FourierGraph: React.FC<FourierGraphProps> = ({
   realSpaceData,
-  fourierSpaceData,
-  title = "フーリエ変換"
+  fourierSpaceData
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
@@ -28,29 +26,8 @@ export const FourierGraph: React.FC<FourierGraphProps> = ({
 
     const updateDimensions = () => {
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const isVerticalLayout = window.innerWidth < 1024; // lg breakpoint
-        
-        // グラフの実際のサイズを先に計算
-        const containerPadding = 48; // コンテナの内側パディング (p-6 = 24px * 2)
-        const graphPadding = 32; // グラフエリアの内側パディング (p-4 = 16px * 2)
-        const margin = 50; // SVGマージン
-        const gap = 24; // グリッドギャップ
-        
-        const availableWidth = rect.width - containerPadding;
-        const availableHeight = window.innerHeight * 0.6; // 画面高さの60%を使用
-        
-        const graphWidth = isVerticalLayout 
-          ? availableWidth - graphPadding - (margin * 2)
-          : (availableWidth - gap - (graphPadding * 2) - (margin * 4)) / 2;
-        
-        const graphHeight = Math.min(
-          isVerticalLayout ? (availableHeight - 200) / 2 : availableHeight - 150,
-          graphWidth * 0.6 // アスペクト比制限
-        );
-        
-        // Note: dimensions calculation kept for potential future use
-        // but not currently used in rendering
+        // Note: Dimension calculations removed as they are not currently used
+        // This effect is kept for potential future responsive features
       }
     };
 
