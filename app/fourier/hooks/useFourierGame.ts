@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { FourierCard, FourierCoefficient, GameState, GraphPoint, FourierTransformResult } from '../types/fourier';
+import { FourierCard, FourierCoefficient, GraphPoint, FourierTransformResult } from '../types/fourier';
 import { drawRandomCard } from '../data/cards';
 
 export const useFourierGame = () => {
@@ -168,7 +168,6 @@ export const useFourierGame = () => {
             // 指数関数のフーリエ変換はローレンツ関数
             // 実空間のλ=2と一致させる
             const lambda_fourier = 2;
-            const gamma = lambda_fourier; // γ = λ（理論的関係）
             // 正しい正規化: F(ω) = A × 2λ / (λ² + (ω-ω₀)²)
             const lorentzian = (2 * lambda_fourier) / (lambda_fourier * lambda_fourier + Math.pow(freq - baseFreq, 2));
             amplitude += baseAmp * lorentzian;

@@ -46,7 +46,6 @@ export const FourierGameScene: React.FC = () => {
         <FourierGraph
           realSpaceData={fourierResult.realSpace}
           fourierSpaceData={fourierResult.fourierSpace}
-          title="フーリエ変換の可視化"
         />
       </div>
 
@@ -63,7 +62,6 @@ export const FourierGameScene: React.FC = () => {
                 <FourierCard
                   key={card.id}
                   card={card}
-                  isSelected={false}
                   isInHand={true}
                   onClick={() => handleCardPlay(card)}
                   onPlay={() => handleCardPlay(card)}

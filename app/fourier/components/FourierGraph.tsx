@@ -6,14 +6,15 @@ import { GraphPoint } from '../types/fourier';
 interface FourierGraphProps {
   realSpaceData: GraphPoint[];
   fourierSpaceData: GraphPoint[];
+  title?: string;
 }
 
 export const FourierGraph: React.FC<FourierGraphProps> = ({
   realSpaceData,
   fourierSpaceData,
+  title = "フーリエ変換"
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 800, height: 400 });
   const [isClient, setIsClient] = useState(false);
 
   // クライアントサイドでのみ実行
@@ -48,19 +49,8 @@ export const FourierGraph: React.FC<FourierGraphProps> = ({
           graphWidth * 0.6 // アスペクト比制限
         );
         
-        // コンテナサイズを計算されたグラフサイズに基づいて設定
-        const containerWidth = isVerticalLayout
-          ? graphWidth + graphPadding + (margin * 2)
-          : (graphWidth * 2) + gap + (graphPadding * 2) + (margin * 4);
-        
-        const containerHeight = isVerticalLayout
-          ? (graphHeight * 2) + 200 // タイトル、ギャップ、説明文のスペース
-          : graphHeight + 150;
-        
-        setDimensions({
-          width: Math.max(400, containerWidth),
-          height: Math.max(300, containerHeight)
-        });
+        // Note: dimensions calculation kept for potential future use
+        // but not currently used in rendering
       }
     };
 

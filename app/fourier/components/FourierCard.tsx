@@ -4,7 +4,6 @@ import { FourierCard as FourierCardType } from '../types/fourier';
 
 interface FourierCardProps {
   card: FourierCardType;
-  isSelected?: boolean;
   isInHand?: boolean;
   onClick?: () => void;
   onPlay?: () => void;
@@ -12,7 +11,6 @@ interface FourierCardProps {
 
 export const FourierCard: React.FC<FourierCardProps> = ({
   card,
-  isSelected = false,
   isInHand = false,
   onClick,
   onPlay
@@ -32,16 +30,6 @@ export const FourierCard: React.FC<FourierCardProps> = ({
       case 'epic': return 'border-purple-400 bg-purple-100';
       case 'legendary': return 'border-yellow-400 bg-yellow-100';
       default: return 'border-gray-400 bg-gray-100';
-    }
-  };
-
-  const getRarityGlow = (rarity: string) => {
-    switch (rarity) {
-      case 'common': return 'shadow-gray-400/50';
-      case 'rare': return 'shadow-blue-400/50';
-      case 'epic': return 'shadow-purple-400/50';
-      case 'legendary': return 'shadow-yellow-400/50';
-      default: return 'shadow-gray-400/50';
     }
   };
 
